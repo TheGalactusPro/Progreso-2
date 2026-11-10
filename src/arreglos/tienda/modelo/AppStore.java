@@ -11,6 +11,11 @@ public class AppStore {
         indice = -1;
     }
 
+    public void cargarDatos(){
+        agrearJuego(new Juego("FIFA 26","Deportes",15,36,50));
+        agrearJuego(new Juego("Roblox","Acción",25,90,20));
+    }
+
     // Get
     public Juego[] getJuegos() {
         return juegos;
@@ -31,10 +36,13 @@ public class AppStore {
     }
 
     public Juego buscarJuego(String nombre){
-        for (int i = 0; i < indice; i++){
-            if (juegos[i].getNombre().equalsIgnoreCase(nombre)){
-                return juegos[i];
+        if (nombre != null && !nombre.trim().isEmpty()){
+            for (int i = 0; i <= indice; i++){
+                if (juegos[i].getNombre().equalsIgnoreCase(nombre)){
+                    return juegos[i];
+                }
             }
+            return null;
         }
         return null;
     }
@@ -43,9 +51,39 @@ public class AppStore {
         if (nombre != null && !nombre.trim().isEmpty() && cantidad > 0) {
             Juego j = buscarJuego(nombre);
             if (j != null) {
-                return j.comprar(cantidad):
+                return j.comprar(cantidad);
             }
         }
         return false;
+    }
+
+    public double vender (String nombre, int cantidad){
+        Juego j = buscarJuego(nombre);
+        if (j !=null){
+            if (j.vender(cantidad)){
+                return j.getPrecio()*cantidad;
+            }else{
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+    public String masVendido(){
+        String nombre = "";
+        int mayor;
+        if (indice >= 0){
+            nombre = juegos[0].getNombre();
+            mayor = juegos[0].getLicenciasVendidas();
+            for (Juego j: juegos){
+                if (j.getLicenciasVendidas() > mayor){
+                    nombre = j.getNombre();
+                    mayor = j.getLicenciasVendidas();
+                }else {
+                    return nombre;
+                }
+            }
+        }
+        return nombre;
     }
 }
