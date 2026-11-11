@@ -21,6 +21,10 @@ public class AppStore {
         return juegos;
     }
 
+    public int getIndice() {
+        return indice;
+    }
+
     // Set
     public void setJuegos(Juego juegos[]) {
         this.juegos = juegos;
